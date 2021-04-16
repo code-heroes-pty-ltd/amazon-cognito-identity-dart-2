@@ -134,7 +134,8 @@ class CognitoUser {
     _deviceKey = dataAuthenticate['AuthenticationResult']['NewDeviceMetadata']['DeviceKey'];
     await cacheDeviceKeyAndPassword();
 
-    if (dataConfirm['UserConfirmationNecessary'] == true) {
+    // TODO: fix that in #29264
+    if (dataConfirm['UserConfirmationNecessary'] == true && !(_signInUserSession?.isValid() ?? false)) {
       throw CognitoUserConfirmationNecessaryException(signInUserSession: _signInUserSession);
     }
     return _signInUserSession;
